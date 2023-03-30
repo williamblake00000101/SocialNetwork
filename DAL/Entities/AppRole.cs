@@ -1,6 +1,8 @@
-﻿namespace DAL.Entities;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class AppRole
+namespace DAL.Entities;
+
+public class AppRole : IdentityRole<int>
 {
-    
+    public ICollection<AppUserRole> UserRoles { get; set; }
 }
