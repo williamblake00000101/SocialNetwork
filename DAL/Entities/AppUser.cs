@@ -18,6 +18,9 @@ public class AppUser : IdentityUser<int>
     public string LookingFor { get; set; }
     public string Interests { get; set; }
     
+    public Specialization Specialization { get; set; }
+    public int SpecializationId { get; set; }
+    
     public List<Photo> Photos { get; set; } = new();
 
     public List<UserLike> LikedByUsers { get; set; }
