@@ -9,7 +9,7 @@ public class AppUserWithSpecializationSpecification: BaseSpecification<AppUser>
         (!userParams.SpecializationId.HasValue || a.SpecializationId == userParams.SpecializationId))
     {
         AddInclude(a => a.Specialization);
-        AddOrderBy(a => a.UserName);
+        AddOrderBy(a => a.LastName);
         ApplyPaging(userParams.PageSize * (userParams.PageNumber - 1), userParams.PageSize);
 
         if (!string.IsNullOrEmpty(userParams.Sort))
@@ -23,7 +23,7 @@ public class AppUserWithSpecializationSpecification: BaseSpecification<AppUser>
                     AddOrderByDescending(a => a.DateOfBirth);
                     break;
                 default:
-                    AddOrderBy(a => a.UserName);
+                    AddOrderBy(a => a.LastName);
                     break;
             }
         }
