@@ -34,5 +34,7 @@ public class SocialNetworkContext : IdentityDbContext<AppUser, AppRole, int,
         modelBuilder.ApplyConfiguration(new UserFriendsConfiguration());
         modelBuilder.ApplyConfiguration(new PhotoConfiguration());
         modelBuilder.ApplyConfiguration(new RatingConfiguration());
+        
+        Seed.ContextSeed(modelBuilder);
     }
 }
