@@ -11,6 +11,7 @@ public interface IUnitOfWork : IDisposable
     ILikesRepository LikesRepository { get; }
     IPhotoRepository PhotoRepository { get; }
     IRatingRepository RatingRepository { get; }
+    ISpecializationRepository SpecializationRepository { get; }
     UserManager<AppUser> UserManager { get; }
     SignInManager<AppUser> SignInManager { get; }
     RoleManager<AppRole> RoleManager { get; }
