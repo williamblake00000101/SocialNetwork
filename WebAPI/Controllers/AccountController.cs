@@ -9,14 +9,10 @@ namespace WebAPI.Controllers;
 public class AccountController : BaseApiController
 {
     private readonly IAuthService _authService;
-    private readonly ITokenService _tokenService;
-    private readonly IMapper _mapper;
 
-    public AccountController(IAuthService authService,
-        ITokenService tokenService, IMapper mapper)
+
+    public AccountController(IAuthService authService)
     {
-        _mapper = mapper;
-        _tokenService = tokenService;
         _authService = authService;
     }
     
