@@ -1,4 +1,8 @@
-﻿using DAL;
+﻿using BLL.Helpers;
+using BLL.Interfaces;
+using BLL.Mapping;
+using BLL.Services;
+using DAL;
 using DAL.Context;
 using DAL.Interfaces;
 using DAL.Repositories;
@@ -20,11 +24,13 @@ public static class ApplicationServicesExtensions
         //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         
-        
+        services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         
         return services;
     }
