@@ -13,8 +13,15 @@ public class PhotoRepository : IPhotoRepository
     {
         _context = context;
     }
+    
+    public async Task<Photo> GetPhotoByIdAsync(int id)
+    {
+        return await _context.Photos
+            .IgnoreQueryFilters()
+            .SingleOrDefaultAsync(x => x.Id == id);
+    }
 
-    public async Task<Photo> GetPhotoByIdAsync(int id, string appUserName)
+    public async Task<Photo> GetPhotoByIdAndUserNameAsync(int id, string appUserName)
     {
         var photo = await _context.Photos.IgnoreQueryFilters().SingleOrDefaultAsync(x => x.Id == id);
         

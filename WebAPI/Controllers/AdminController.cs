@@ -1,8 +1,5 @@
 ﻿using BLL.Interfaces;
-using DAL.Entities;
-using DAL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -12,6 +9,7 @@ public class AdminController : BaseApiController
 {
     private readonly IAdminService _adminService;
     private readonly IPhotoService _photoService;
+
 
     public AdminController(IAdminService adminService,
         IPhotoService photoService)
@@ -36,5 +34,33 @@ public class AdminController : BaseApiController
         var result = await _adminService.EditRoles(username, roles);
         
         return Ok(result);
+    }
+    
+    [Authorize(Policy = "ModeratePhotoRole")]
+    [HttpGet("photos-to-moderate")]
+    public async Task<ActionResult> GetPhotosForModeration()
+    {
+        var photos = await _photoService.GetUnapprovedPhotos();
+
+        return Ok(photos);
+    }
+    
+    [Authorize(Policy = "ModeratePhotoRole")]
+    [HttpPost("approve-photo/{photoId}")]
+    public async Task<ActionResult> ApprovePhoto(int photoId)
+    {
+        await _photoService.ApprovePhoto(photoId);
+        
+        return Ok();
+    }
+    
+    [Authorize(Policy = "ModeratePhotoRole")]
+    [HttpPost("reject-photo/{photoId}")]
+    public async Task<ActionResult> RejectPhoto(int photoId)
+    {
+        //var user = _authService.FindByEmailFromClaims(User);
+        await _photoService.DeletePhotoAsync(photoId);
+        
+        return Ok();
     }
 }
