@@ -26,4 +26,24 @@ public class LikesRepository : ILikesRepository
             .Include(x => x.LikedUsers)
             .FirstOrDefaultAsync(x => x.Id == userId);
     }
+
+    public IQueryable<AppUser> GetUserLikes(LikesParams likesParams)
+    {
+        var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+        var likes = _context.Likes.AsQueryable();
+
+        if (likesParams.Predicate == "liked")
+        {
+            likes = likes.Where(like => like.SourceUserId == likesParams.AppUserId);
+            users = likes.Select(like => like.TargetUser);
+        }
+
+        if (likesParams.Predicate == "likedBy")
+        {
+            likes = likes.Where(like => like.TargetUserId == likesParams.AppUserId);
+            users = likes.Select(like => like.SourceUser);
+        }
+        
+        return users;
+    }
 }
