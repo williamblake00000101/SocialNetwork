@@ -30,6 +30,8 @@ public static class ApplicationServicesExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IPhotoService, PhotoService>();
+        services.AddScoped<ILikeService, LikeService>();
+        services.AddScoped<IRatingService, RatingService>();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
