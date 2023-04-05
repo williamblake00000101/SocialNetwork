@@ -7,6 +7,7 @@ using DAL.Context;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.SignalR;
 
 namespace WebAPI.Extensions;
 
@@ -33,6 +34,9 @@ public static class ApplicationServicesExtensions
         services.AddScoped<ILikeService, LikeService>();
         services.AddScoped<IRatingService, RatingService>();
         services.AddScoped<IMessageService, MessageService>();
+        
+        services.AddSignalR();
+        services.AddSingleton<PresenceTracker>();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));

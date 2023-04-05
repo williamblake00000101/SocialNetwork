@@ -14,4 +14,5 @@ public interface IMessageRepository
     void DeleteMessage(Message message);
     Task<Message> GetMessage(int id);
     IQueryable<Message> GetMessagesForUser(MessageParams messageParams);
+    Task<IEnumerable<Message>> GetMessageThread(string currentUserName, string recipientUserName); 
 }
