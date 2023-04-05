@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Specifications;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAL.Interfaces;
@@ -13,4 +14,5 @@ public interface IUserRepository
     Task<AppUser> GetUserByPhotoId(int photoId);
     Task<IQueryable<AppUser>> GetUserFriendsByIdAsync(int id);
     Task<IQueryable<AppUser>> GetInvitationForFriendshipByIdAsync(int id);
+    IQueryable<AppUser> GetMemberAsync(string userName);
 }

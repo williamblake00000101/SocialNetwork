@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BLL.DTOs;
 using BLL.Exceptions;
+using BLL.Helpers;
 using BLL.Interfaces;
+using CloudinaryDotNet.Actions;
 using DAL.Entities;
 using DAL.Interfaces;
+using DAL.Specifications;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services;
 
@@ -18,8 +23,7 @@ public class UserService : IUserService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-
-
+    
     public async Task<IEnumerable<AppUserDto>> GetUserFriendsByIdAsync(int id)
     {
         var profile = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
@@ -152,5 +156,33 @@ public class UserService : IUserService
         _unitOfWork.UserRepository.Update(user);
         _unitOfWork.UserRepository.Update(friend);
         await _unitOfWork.SaveAsync();
+    }
+
+    public async Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string userName)
+    {
+        var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+        
+        var photo = new Photo
+        {
+            Url = result.SecureUrl.AbsoluteUri,
+            PublicId = result.PublicId
+        };
+        
+        user.Photos.Add(photo);
+
+        await _unitOfWork.SaveAsync();
+
+        return _mapper.Map<PhotoDto>(photo);
+    }
+
+    public async Task<MemberDto> GetMemberAsync(string userName, bool isCurrentUser)
+    {
+        var query = _unitOfWork.UserRepository.GetMemberAsync(userName);
+        
+        if (isCurrentUser) query = query.IgnoreQueryFilters();
+
+        var result = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
+
+        return await result.FirstOrDefaultAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using DAL.Entities;
 using DAL.Interfaces;
+using DAL.Specifications;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -90,5 +91,14 @@ public class UserRepository : IUserRepository
         }
 
         return friends;
+    }
+
+    public IQueryable<AppUser> GetMemberAsync(string userName)
+    {
+        var query = _context.Users
+            .Where(x => x.UserName == userName)
+            .AsQueryable();
+        
+        return query;
     }
 }

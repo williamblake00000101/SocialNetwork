@@ -13,9 +13,17 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.PhotoUrl, 
                 opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()))
-            .ForMember(dest => dest.ThisUserFriendIds, opt => opt.MapFrom(src => src.ThisUserFriends))
-            .ForMember(dest => dest.UserIsFriendIds, opt => opt.MapFrom(src => src.UserIsFriend))
             .ForMember(dest => dest.Specialization, o => o.MapFrom(src => src.Specialization.Name));
+        /*
+        CreateMap<MemberDto, AppUser>()
+            .ForMember(p => p.ThisUserFriends.Select(item => item.AppUserFriendId), c => c.MapFrom(src => src.ThisUserFriendIds))
+            .ReverseMap();
+        */
+
+        CreateMap<AppUser, AppUserDto>()
+            .ForMember(dest => dest.ThisUserFriendIds,
+                opt => opt.MapFrom(src => src.ThisUserFriends.Select(item => item.AppUserFriendId)));
+        
         CreateMap<Photo, PhotoDto>();
         CreateMap<Photo, PhotoForApprovalDto>();
         CreateMap<Specialization, SpecializationDto>();

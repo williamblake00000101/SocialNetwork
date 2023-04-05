@@ -29,8 +29,15 @@ public class AppUser : IdentityUser<int>
     public List<Message> MessagesSent { get; set; }
     public List<Message> MessagesReceived { get; set; }
     
-    public ICollection<UserFriends> UserIsFriend { get; set; }
-    public ICollection<UserFriends> ThisUserFriends { get; set; }
+    public virtual ICollection<UserFriends> UserIsFriend { get; set; }
+    public virtual ICollection<UserFriends> ThisUserFriends { get; set; }
 
     public ICollection<AppUserRole> UserRoles { get; set; }
+    
+    
+    public AppUser()
+    {
+        UserIsFriend ??= new HashSet<UserFriends>();
+        ThisUserFriends ??= new HashSet<UserFriends>();
+    }
 }
