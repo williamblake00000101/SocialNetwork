@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Specifications;
 
 namespace DAL.Interfaces;
 
@@ -12,4 +13,5 @@ public interface IMessageRepository
     void AddMessage(Message message);
     void DeleteMessage(Message message);
     Task<Message> GetMessage(int id);
+    IQueryable<Message> GetMessagesForUser(MessageParams messageParams);
 }

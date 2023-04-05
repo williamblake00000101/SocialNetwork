@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using DAL.Entities;
 using DAL.Interfaces;
+using DAL.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
@@ -57,5 +58,24 @@ public class MessageRepository : IMessageRepository
     public async Task<Message> GetMessage(int id)
     {
         return await _context.Messages.FindAsync(id);
+    }
+
+    public IQueryable<Message> GetMessagesForUser(MessageParams messageParams)
+    {
+        var query = _context.Messages
+            .OrderByDescending(x => x.MessageSent)
+            .AsQueryable();
+
+        query = messageParams.Container switch
+        {
+            "Inbox" => query.Where(u => u.RecipientUsername == messageParams.UserName 
+                                        && u.RecipientDeleted == false),
+            "Outbox" => query.Where(u => u.SenderUsername == messageParams.UserName 
+                                         && u.SenderDeleted == false),
+            _ => query.Where(u => u.RecipientUsername == messageParams.UserName 
+                                  && u.RecipientDeleted == false && u.DateRead == null)
+        };
+
+        return query;
     }
 }
