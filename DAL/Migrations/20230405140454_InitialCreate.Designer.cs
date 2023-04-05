@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(SocialNetworkContext))]
-    [Migration("20230331074937_InitialCreate")]
+    [Migration("20230405140454_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

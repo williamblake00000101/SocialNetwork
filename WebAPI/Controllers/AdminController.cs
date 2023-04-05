@@ -58,9 +58,7 @@ public class AdminController : BaseApiController
     [HttpPost("reject-photo/{photoId}")]
     public async Task<ActionResult> RejectPhoto(int photoId)
     {
-        //var user = _authService.FindByEmailFromClaims(User);
         await _photoService.DeletePhotoAsync(photoId);
-        
         return Ok();
     }
 }
