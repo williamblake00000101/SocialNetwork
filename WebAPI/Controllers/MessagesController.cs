@@ -25,7 +25,7 @@ public class MessagesController : BaseApiController
     {
         var userName = User.GetUserName();
         var result = await _messageService.CreateMessage(createMessageDto, userName);
-        
+
         return Ok(result);
     }
 
@@ -33,8 +33,8 @@ public class MessagesController : BaseApiController
     public async Task<ActionResult<Pagination<MessageDto>>> GetMessagesForUser([FromQuery] MessageParams messageParams)
     {
         var userName = User.GetUserName();
-        var messages = await _messageService.GetMessagesForUser(messageParams, userName) ;
-        
+        var messages = await _messageService.GetMessagesForUser(messageParams, userName);
+
         Response.AddPaginationHeader(new PaginationHeader(messages.CurrentPage, messages.PageSize,
             messages.TotalCount, messages.TotalPages));
 
@@ -46,7 +46,7 @@ public class MessagesController : BaseApiController
     {
         var userName = User.GetUserName();
         await _messageService.DeleteMessage(id, userName);
-        
+
         return Ok();
     }
 }

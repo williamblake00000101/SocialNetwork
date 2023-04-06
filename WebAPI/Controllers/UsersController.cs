@@ -57,6 +57,30 @@ public class UsersController : BaseApiController
 
     }
     
+    [HttpPut("set-main-photo/{photoId}")]
+    public async Task<ActionResult> SetMainPhoto(int photoId)
+    {
+        var currentUsername = User.GetUserName();
+        
+        if (currentUsername == null) return NotFound();
+        
+        await _userService.SetMainPhotoByUser(photoId, currentUsername);
+        
+        return NoContent();
+    }
+    
+    [HttpDelete("delete-photo/{photoId}")]
+    public async Task<ActionResult> DeletePhoto(int photoId)
+    {
+        var currentUsername = User.GetUserName();
+        
+        if (currentUsername == null) return NotFound();
+        
+        await _userService.DeletePhotoByUser(photoId, currentUsername);
+        
+        return Ok();
+    }
+    
     //[Cached(600)]
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyList<SpecializationDto>>> GetSpecializationTypes()

@@ -12,5 +12,6 @@ public interface IPhotoService
     Task<IEnumerable<PhotoForApprovalDto>> GetUnapprovedPhotos();
     Task ApprovePhoto(int photoId);
     
-    Task DeletePhotoAsync(int id);
+    Task DeletePhotoByIdAsync(int id);
+    Task<DeletionResult> DeletePhotoAsync(string publicId);
 }

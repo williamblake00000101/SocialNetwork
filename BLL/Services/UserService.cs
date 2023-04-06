@@ -18,10 +18,13 @@ public class UserService : IUserService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public UserService(IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly IPhotoService _photoService;
+    public UserService(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+
+        _photoService = photoService;
     }
     
     public async Task<IEnumerable<AppUserDto>> GetUserFriendsByIdAsync(int id)
@@ -184,5 +187,47 @@ public class UserService : IUserService
         var result = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
 
         return await result.FirstOrDefaultAsync();
+    }
+
+    public async Task SetMainPhotoByUser(int photoId, string userName)
+    {
+        var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+
+        if (user == null) throw new SocialNetworkException("Not Found!");
+
+        var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+        if (photo == null) throw new SocialNetworkException("Not Found!");
+
+        if (photo.IsMain) throw new SocialNetworkException("This is already your main photo!");
+
+        var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
+        if (currentMain != null) currentMain.IsMain = false;
+        photo.IsMain = true;
+
+        await _unitOfWork.SaveAsync();
+        
+    }
+
+    public async Task DeletePhotoByUser(int photoId, string userName)
+    {
+        var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+
+        var photo = await _unitOfWork.PhotoRepository.GetPhotoByIdAsync(photoId);
+
+        if (photo == null) throw new SocialNetworkException("Not Found!");
+
+        if (photo.IsMain) throw new SocialNetworkException("You cannot delete your main photo");
+
+        if (photo.PublicId != null)
+        {
+            var result = await _photoService.DeletePhotoAsync(photo.PublicId);
+            if (result.Error != null) throw new SocialNetworkException("Error!");
+        }
+
+        user.Photos.Remove(photo);
+
+        await _unitOfWork.SaveAsync();
+
     }
 }

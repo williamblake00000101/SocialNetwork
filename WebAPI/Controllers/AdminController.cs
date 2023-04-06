@@ -10,7 +10,6 @@ public class AdminController : BaseApiController
     private readonly IAdminService _adminService;
     private readonly IPhotoService _photoService;
 
-
     public AdminController(IAdminService adminService,
         IPhotoService photoService)
     {
@@ -23,19 +22,19 @@ public class AdminController : BaseApiController
     public async Task<ActionResult> GetUsersWithRoles()
     {
         var users = await _adminService.GetUsersWithRoles();
-        
+
         return Ok(users);
     }
-    
+
     [Authorize(Policy = "RequireAdminRole")]
     [HttpPost("edit-roles/{username}")]
     public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
     {
         var result = await _adminService.EditRoles(username, roles);
-        
+
         return Ok(result);
     }
-    
+
     [Authorize(Policy = "ModeratePhotoRole")]
     [HttpGet("photos-to-moderate")]
     public async Task<ActionResult> GetPhotosForModeration()
@@ -44,21 +43,21 @@ public class AdminController : BaseApiController
 
         return Ok(photos);
     }
-    
+
     [Authorize(Policy = "ModeratePhotoRole")]
     [HttpPost("approve-photo/{photoId}")]
     public async Task<ActionResult> ApprovePhoto(int photoId)
     {
         await _photoService.ApprovePhoto(photoId);
-        
+
         return Ok();
     }
-    
+
     [Authorize(Policy = "ModeratePhotoRole")]
     [HttpPost("reject-photo/{photoId}")]
     public async Task<ActionResult> RejectPhoto(int photoId)
     {
-        await _photoService.DeletePhotoAsync(photoId);
+        await _photoService.DeletePhotoByIdAsync(photoId);
         return Ok();
     }
 }

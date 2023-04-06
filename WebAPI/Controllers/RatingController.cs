@@ -14,7 +14,6 @@ namespace WebAPI.Controllers;
 public class RatingController : BaseApiController
 {
     private readonly IRatingService _ratingService;
-    private readonly IMapper _mapper;
 
     public RatingController(IRatingService ratingService)
     {
@@ -26,7 +25,7 @@ public class RatingController : BaseApiController
     {
         var sourceUserId = User.GetUserId();
         await _ratingService.Vote(ratingDto, sourceUserId);
-        
+
         return NoContent();
     }
 }

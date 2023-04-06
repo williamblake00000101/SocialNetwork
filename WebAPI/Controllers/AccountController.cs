@@ -10,37 +10,36 @@ public class AccountController : BaseApiController
 {
     private readonly IAuthService _authService;
 
-
     public AccountController(IAuthService authService)
     {
         _authService = authService;
     }
-    
+
     [Authorize]
     [HttpGet]
     public async Task<ActionResult<AppUserDto>> GetCurrentUser()
     {
         return await _authService.FindByEmailFromClaims(User);
     }
-    
-    [HttpPost("register")] 
+
+    [HttpPost("register")]
     public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto)
     {
         return await _authService.RegisterAsync(registerDto);
     }
-    
+
     [HttpPost("login")]
     public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
     {
         return await _authService.LoginAsync(loginDto);
     }
-    
+
     [HttpGet("emailexists")]
     public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
     {
         return await _authService.CheckEmailExistsAsync(email);
     }
-    
+
     [HttpGet("usernameexists")]
     public async Task<ActionResult<bool>> CheckUserNameExistsAsync([FromQuery] string userName)
     {

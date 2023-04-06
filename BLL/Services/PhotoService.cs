@@ -91,7 +91,7 @@ public class PhotoService : IPhotoService
         
     }
 
-    public async Task DeletePhotoAsync(int id)
+    public async Task DeletePhotoByIdAsync(int id)
     {
         var photo = await _unitOfWork.PhotoRepository.GetPhotoByIdAsync(id);
         if (photo == null) throw new SocialNetworkException("Photo does not exist");
@@ -112,5 +112,12 @@ public class PhotoService : IPhotoService
         }
 
         await _unitOfWork.SaveAsync();
+    }
+    
+    public async Task<DeletionResult> DeletePhotoAsync(string publicId)
+    {
+        var deleteParams = new DeletionParams(publicId);
+
+        return await _cloudinary.DestroyAsync(deleteParams);
     }
 }
