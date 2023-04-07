@@ -178,6 +178,28 @@ public class UserService : IUserService
         return _mapper.Map<PhotoDto>(photo);
     }
 
+    public async Task<Pagination<MemberDto>> GetMembersAsync(UserParams userParams, string userName)
+    {
+        var currentUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+        userParams.CurrentUsername = currentUser.UserName;
+        
+        if (string.IsNullOrEmpty(userParams.Gender))
+        {
+            userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+        }
+        
+        var spec = new AppUserWithSpecializationSpecification(userParams);
+        var countSpec = new AppUserWithFiltersForCountSpecification(userParams);
+
+        var totalUsers = await _unitOfWork.Repository<AppUser>().CountAsync(countSpec);
+        var users = await _unitOfWork.Repository<AppUser>().ListAsync(spec);
+
+        var data = _mapper.Map<IReadOnlyList<MemberDto>>(users);
+
+        return new Pagination<MemberDto>(data,
+            totalUsers, userParams.PageNumber, userParams.PageSize);
+    }
+
     public async Task<MemberDto> GetMemberAsync(string userName, bool isCurrentUser)
     {
         var query = _unitOfWork.UserRepository.GetMemberAsync(userName);
@@ -187,6 +209,17 @@ public class UserService : IUserService
         var result = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
 
         return await result.FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateUser(MemberUpdateDto memberUpdateDto, string userName)
+    {
+        var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+
+        if (user == null) throw new SocialNetworkException("Not Found!");
+
+        _mapper.Map(memberUpdateDto, user);
+
+        await _unitOfWork.SaveAsync();
     }
 
     public async Task SetMainPhotoByUser(int photoId, string userName)

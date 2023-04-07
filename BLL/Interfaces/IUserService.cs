@@ -1,6 +1,8 @@
 ﻿using BLL.DTOs;
+using BLL.Helpers;
 using CloudinaryDotNet.Actions;
 using DAL.Specifications;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BLL.Interfaces;
 
@@ -12,9 +14,10 @@ public interface IUserService
     Task SendInvitationForFriendshipAsync(int userId, int wantedFriendId);
     Task ConfirmFriendship(int userId, int friendToConfirmId);
     Task DeleteFriendByFriendId(int userId, int friendToDeleteId);
-
     Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string userName);
+    Task<Pagination<MemberDto>> GetMembersAsync(UserParams userParams, string userName);
     Task<MemberDto> GetMemberAsync(string userName, bool isCurrentUser);
+    Task UpdateUser(MemberUpdateDto memberUpdateDto, string userName);
     Task SetMainPhotoByUser(int photoId, string userName);
     Task DeletePhotoByUser(int photoId, string userName);
 }
