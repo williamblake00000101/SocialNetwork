@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 
 
@@ -22,14 +23,16 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     RouterModule,
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
+    CarouselModule.forRoot(),
   ],
   exports: [
     TextInputComponent,
     DatePickerComponent,
-    
+
     ReactiveFormsModule,
     BsDropdownModule,
     FormsModule,
+    CarouselModule,
 
   ]
 })
