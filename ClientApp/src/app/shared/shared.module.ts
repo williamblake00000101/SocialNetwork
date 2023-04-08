@@ -26,9 +26,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   exports: [
     TextInputComponent,
     DatePickerComponent,
-
-
-
+    
     ReactiveFormsModule,
     BsDropdownModule,
     FormsModule,
