@@ -8,6 +8,9 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import { HasRoleDirective } from './directives/has-role.directive'
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -15,10 +18,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   declarations: [
     NavBarComponent,
     SectionHeaderComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    RolesModalComponent
   ],
   imports: [
-
     BreadcrumbModule,
     SharedModule,
     CommonModule,
@@ -27,12 +30,17 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ToastrModule.forRoot(
       { positionClass: 'toast-bottom-right',
         preventDuplicates: true}
-    )
+
+    ),
+    TabsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     NavBarComponent,
     SectionHeaderComponent,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TabsModule,
+    ModalModule
   ]
 })
 export class CoreModule { }

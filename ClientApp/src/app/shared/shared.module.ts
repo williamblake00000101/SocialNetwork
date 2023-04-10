@@ -7,6 +7,9 @@ import { RouterModule } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 
@@ -24,16 +27,20 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
+    TabsModule.forRoot(),
+    NgxGalleryModule,
+    FileUploadModule,
   ],
   exports: [
     TextInputComponent,
     DatePickerComponent,
-
+    NgxGalleryModule,
+    FileUploadModule,
     ReactiveFormsModule,
     BsDropdownModule,
     FormsModule,
     CarouselModule,
-
+    TabsModule,
   ]
 })
 export class SharedModule { }
