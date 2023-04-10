@@ -7,6 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import { HasRoleDirective } from './directives/has-role.directive'
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -22,6 +23,7 @@ import { HasRoleDirective } from './directives/has-role.directive'
     SharedModule,
     CommonModule,
     RouterModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot(
       { positionClass: 'toast-bottom-right',
         preventDuplicates: true}
@@ -29,7 +31,8 @@ import { HasRoleDirective } from './directives/has-role.directive'
   ],
   exports: [
     NavBarComponent,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    NgxSpinnerModule
   ]
 })
 export class CoreModule { }
