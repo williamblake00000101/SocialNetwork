@@ -3,7 +3,7 @@
   <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 60px;" routerLink="/">
 
     <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    
+
       <a class="nav-link" routerLink="/members" routerLinkActive="active">Members</a>
 
       <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
@@ -17,23 +17,25 @@
     </ng-container>
 
     <ng-container *ngIf="accountService.currentUser$ | async as user">
-      <div class="dropdown ms-3 me-5" style="cursor: pointer;" dropdown>
+      <div class="dropdown ms-3 me-5" style="cursor: pointer; " dropdown>
         <a dropdownToggle class="dropdown-toggle">
           <strong>Welcome {{user.username}}</strong>
         </a>
-        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
-          <li *appHasRole="['Admin', 'Moderator']" class="dropdown-item">
-            <a class="bi bi-person-workspace" routerLink="/admin" routerLinkActive="active">Admin</a>
+        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" style="background-color: #1a0933" >
+          <li *appHasRole="['Administrator', 'Moderator']" class="py-1">
+            <a routerLink="/admin" routerLinkActive="active"  class="dropdown-item" style="color: #32fbe2">
+            <i  class="bi bi-person-workspace me-3" style="color: #32fbe2"></i> Admin
+            </a>
           </li>
           <li class="py-1">
-            <a routerLink="/member/edit" class="dropdown-item">
-              <i class="bi bi-person-fill-gear me-3"></i> Edit Profile
+            <a routerLink="/member/edit" class="dropdown-item" style="color: #32fbe2">
+              <i class="bi bi-person-fill-gear me-3" style="color: #32fbe2"></i> Edit Profile
             </a>
           </li>
           <div class="dropdown-divider"></div>
           <li class="py-1">
-            <a (click)="accountService.logout()" class="dropdown-item">
-              <i class="bi bi-door-open me-3"></i> Logout
+            <a (click)="accountService.logout()" class="dropdown-item" style="color: #32fbe2">
+              <i class="bi bi-door-open me-3" style="color: #32fbe2"></i> Logout
             </a>
           </li>
         </ul>
