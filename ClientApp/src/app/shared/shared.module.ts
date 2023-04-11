@@ -10,13 +10,17 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
-
+import { PagerComponent } from './components/pager/pager.component';
+import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
   declarations: [
     TextInputComponent,
     DatePickerComponent,
+    PagerComponent,
+    PagingHeaderComponent,
 
   ],
   imports: [
@@ -28,12 +32,16 @@ import { FileUploadModule } from 'ng2-file-upload';
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     TabsModule.forRoot(),
+    PaginationModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
   ],
   exports: [
     TextInputComponent,
     DatePickerComponent,
+    PaginationModule,
+    PagingHeaderComponent,
+    PagerComponent,
     NgxGalleryModule,
     FileUploadModule,
     ReactiveFormsModule,
