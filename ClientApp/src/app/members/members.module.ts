@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MemberEditComponent } from './member-edit/member-edit.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MemberEditComponent
+  ],
   imports: [
     CommonModule
   ]

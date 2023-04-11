@@ -211,6 +211,14 @@ public class UserService : IUserService
         return await result.FirstOrDefaultAsync();
     }
 
+    public async Task<MemberDto> GetMemberByIdAsync(int id)
+    {
+        var query = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
+        var user = _mapper.Map<MemberDto>(query);
+        
+        return user;
+    }
+
     public async Task UpdateUser(MemberUpdateDto memberUpdateDto, string userName)
     {
         var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);

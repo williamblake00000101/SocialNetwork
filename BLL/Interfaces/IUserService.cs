@@ -17,6 +17,7 @@ public interface IUserService
     Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string userName);
     Task<Pagination<MemberDto>> GetMembersAsync(UserParams userParams, string userName);
     Task<MemberDto> GetMemberAsync(string userName, bool isCurrentUser);
+    Task<MemberDto> GetMemberByIdAsync(int id);
     Task UpdateUser(MemberUpdateDto memberUpdateDto, string userName);
     Task SetMainPhotoByUser(int photoId, string userName);
     Task DeletePhotoByUser(int photoId, string userName);

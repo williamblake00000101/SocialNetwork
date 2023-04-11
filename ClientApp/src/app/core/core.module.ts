@@ -11,6 +11,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
+import { TestErrorComponent } from './test-error/test-error.component';
 
 
 
@@ -19,7 +23,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NavBarComponent,
     SectionHeaderComponent,
     HasRoleDirective,
-    RolesModalComponent
+    RolesModalComponent,
+    ConfirmDialogComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
+    TestErrorComponent
   ],
   imports: [
     BreadcrumbModule,
@@ -38,6 +46,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   exports: [
     NavBarComponent,
     SectionHeaderComponent,
+    ConfirmDialogComponent,
+    RolesModalComponent,
     NgxSpinnerModule,
     TabsModule,
     ModalModule
