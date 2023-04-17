@@ -4,12 +4,13 @@
       <div class="col-4 col-md-8 col-lg-6 col-xl-5">
         <div class="card text-white bg-primary mb-3" style="border-radius: 1rem;">
           <div class="card-body p-3 text-center">
-            <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off" style="color: #32fbe2">
+            <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off"
+                  style="color: #32fbe2">
               <h2 class="text-center " style="color: #32fbe2">Sign up</h2>
               <hr>
 
               <div class="mb-3 " style="color: #32fbe2">
-                <label style="margin-right:10px" >I am a: </label>
+                <label style="margin-right:10px">I am a: </label>
                 <label class="form-check-label">
                   <input type="radio" class="form-check-input" value="male" formControlName="gender"> Male
                 </label>
@@ -25,7 +26,7 @@
               <app-text-input [formControl]="$any(registerForm.controls['lastname'])"
                               [label]="'Last Name'"></app-text-input>
               <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])"
-                               [label]="'Date of Birth'" [maxDate]="maxDate"></app-date-picker >
+                               [label]="'Date of Birth'" [maxDate]="maxDate"></app-date-picker>
               <app-text-input [formControl]="$any(registerForm.controls['city'])"
                               [label]="'City'"></app-text-input>
               <app-text-input [formControl]="$any(registerForm.controls['country'])"

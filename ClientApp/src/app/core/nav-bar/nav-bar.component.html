@@ -19,7 +19,7 @@
     <ng-container *ngIf="accountService.currentUser$ | async as user">
       <div class="dropdown ms-3 me-5" style="cursor: pointer; " dropdown>
         <a dropdownToggle class="dropdown-toggle">
-          <strong>Welcome {{user.username}}</strong>
+          <strong>Welcome {{user.email}}</strong>
         </a>
         <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" style="background-color: #1a0933" >
           <li *appHasRole="['Administrator', 'Moderator']" class="py-1">

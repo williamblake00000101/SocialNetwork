@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Photo } from 'src/app/shared/models/photo';
-import { AdminService } from '../admin.service';
+import {Component, OnInit} from '@angular/core';
+import {Photo} from 'src/app/shared/models/photo';
+import {AdminService} from '../admin.service';
 
 @Component({
   selector: 'app-photo-management',
@@ -10,7 +10,8 @@ import { AdminService } from '../admin.service';
 export class PhotoManagementComponent implements OnInit {
   photos: Photo[] = [];
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService) {
+  }
 
   ngOnInit(): void {
     this.getPhotosForApproval();

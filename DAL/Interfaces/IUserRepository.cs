@@ -10,7 +10,8 @@ public interface IUserRepository
     Task<IEnumerable<AppUser>> GetUsersAsync();
     Task<AppUser> GetUserByIdAsync(int id);
     Task<AppUser> GetUserByUsernameAsync(string username);
-    Task<AppUser> GetUserByEmailAsync(string email);
+    IQueryable<AppUser> GetUserByEmailAsync(string email);
+    Task<AppUser> GetByEmailAsync(string email);
     Task<AppUser> GetUserByPhotoId(int photoId);
     Task<IQueryable<AppUser>> GetUserFriendsByIdAsync(int id);
     Task<IQueryable<AppUser>> GetInvitationForFriendshipByIdAsync(int id);

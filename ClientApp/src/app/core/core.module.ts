@@ -48,6 +48,7 @@ import { TestErrorComponent } from './test-error/test-error.component';
     SectionHeaderComponent,
     ConfirmDialogComponent,
     RolesModalComponent,
+    HasRoleDirective,
     NgxSpinnerModule,
     TabsModule,
     ModalModule

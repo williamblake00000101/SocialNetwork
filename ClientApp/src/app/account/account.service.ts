@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {PresenceService} from '../core/services/presence.service';
-import {map, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, map, of, ReplaySubject} from 'rxjs';
 import {User} from '../shared/models/user';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class AccountService {
   constructor(private http: HttpClient, private presenceService: PresenceService, private router: Router) {
   }
 
-  login(values: any) {
-    return this.http.post<User>(this.baseUrl + 'account/login', values).pipe(
+  login(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -29,8 +29,8 @@ export class AccountService {
     )
   }
 
-  register(values: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', values).pipe(
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {
         if (user) {
           this.setCurrentUser(user);
@@ -49,7 +49,7 @@ export class AccountService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.currentUserSource.next(null);
     this.presenceService.stopHubConnection();
     this.router.navigateByUrl('/');

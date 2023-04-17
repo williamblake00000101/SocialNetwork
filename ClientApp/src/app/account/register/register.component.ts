@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { debounceTime, finalize, map, switchMap, take } from 'rxjs';
-import { AccountService } from '../account.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {debounceTime, finalize, map, switchMap, take} from 'rxjs';
+import {AccountService} from '../account.service';
 
 @Component({
   selector: 'app-register',
@@ -19,10 +19,12 @@ export class RegisterComponent implements OnInit {
   complexPassword = "(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"
 
   constructor(private accountService: AccountService, private toastr: ToastrService,
-              private fb: FormBuilder, private router: Router) { }
+              private fb: FormBuilder, private router: Router) {
+  }
+
   ngOnInit(): void {
     this.initializeForm();
-    this.maxDate.setFullYear(this.maxDate.getFullYear() -18);
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   initializeForm() {
@@ -74,8 +76,8 @@ export class RegisterComponent implements OnInit {
   private getDateOnly(dob: string | undefined) {
     if (!dob) return;
     let theDob = new Date(dob);
-    return new Date(theDob.setMinutes(theDob.getMinutes()-theDob.getTimezoneOffset()))
-      .toISOString().slice(0,10);
+    return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset()))
+      .toISOString().slice(0, 10);
   }
 
   matchValues(matchTo: string): ValidatorFn {
@@ -87,5 +89,4 @@ export class RegisterComponent implements OnInit {
   cancel() {
     this.cancelRegister.emit(false);
   }
-
 }

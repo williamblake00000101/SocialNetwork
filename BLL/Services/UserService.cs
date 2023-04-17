@@ -161,9 +161,9 @@ public class UserService : IUserService
         await _unitOfWork.SaveAsync();
     }
 
-    public async Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string userName)
+    public async Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string email)
     {
-        var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+        var user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
         
         var photo = new Photo
         {
@@ -200,14 +200,13 @@ public class UserService : IUserService
             totalUsers, userParams.PageNumber, userParams.PageSize);
     }
 
-    public async Task<MemberDto> GetMemberAsync(string userName, bool isCurrentUser)
+    public async Task<MemberDto> GetMemberAsync(string email, bool isCurrentUser)
     {
-        var query = _unitOfWork.UserRepository.GetMemberAsync(userName);
+        var query = _unitOfWork.UserRepository.GetUserByEmailAsync(email);
+        var result = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsQueryable();
         
-        if (isCurrentUser) query = query.IgnoreQueryFilters();
-
-        var result = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
-
+        if (isCurrentUser) result = result.IgnoreQueryFilters();
+        
         return await result.FirstOrDefaultAsync();
     }
 

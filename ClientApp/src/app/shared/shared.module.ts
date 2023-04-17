@@ -13,7 +13,12 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { TimeagoModule } from 'ngx-timeago';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -35,8 +40,15 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     PaginationModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
+    FileUploadModule,
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    TimeagoModule.forRoot(),
+    ModalModule.forRoot(),
+    ButtonsModule.forRoot(),
   ],
   exports: [
+    ButtonsModule,
     TextInputComponent,
     DatePickerComponent,
     PaginationModule,
@@ -49,6 +61,16 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     FormsModule,
     CarouselModule,
     TabsModule,
+    BsDropdownModule,
+    ToastrModule,
+    TabsModule,
+    NgxGalleryModule,
+    NgxSpinnerModule,
+    FileUploadModule,
+    BsDatepickerModule,
+    PaginationModule,
+    TimeagoModule,
+    ModalModule
   ]
 })
 export class SharedModule { }

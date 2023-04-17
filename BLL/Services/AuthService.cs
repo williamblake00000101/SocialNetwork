@@ -31,7 +31,9 @@ public class AuthService : IAuthService
         {
             Email = user.Email,
             Token = await _tokenService.CreateToken(user),
-            UserName = user.UserName
+            UserName = user.UserName,
+            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+            Gender = user.Gender
         };
     }
     

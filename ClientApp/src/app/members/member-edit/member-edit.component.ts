@@ -7,6 +7,8 @@ import { Member } from 'src/app/shared/models/member';
 import { User } from 'src/app/shared/models/user';
 import { MembersService } from '../members.service';
 
+
+
 @Component({
   selector: 'app-member-edit',
   templateUrl: './member-edit.component.html',
@@ -30,6 +32,25 @@ export class MemberEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.loadMember();
+  }
+
+  loadMember() {
+    if (!this.user) return;
+    this.memberService.getMember(this.user.email).subscribe({
+      next: member => {this.member = member,
+        this.toastr.success('Profile loaded successfully');
+      }
+    })
+   
+  }
+
+  updateMember() {
+    this.memberService.updateMember(this.editForm?.value).subscribe({
+      next: _ => {
+        this.toastr.success('Profile updated successfully');
+        this.editForm?.reset(this.member);
+      }
+    })
   }
 }

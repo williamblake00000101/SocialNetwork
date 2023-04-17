@@ -39,7 +39,17 @@ public class UserRepository : IUserRepository
             .SingleOrDefaultAsync(x => x.UserName == username);
     }
 
-    public async Task<AppUser> GetUserByEmailAsync(string email)
+    public IQueryable<AppUser> GetUserByEmailAsync(string email)
+    {
+        var query = _context.Users
+            .Where(x => x.Email == email)
+            .Include(p => p.Photos)
+            .AsQueryable();
+        
+        return query;
+    }
+
+    public async Task<AppUser> GetByEmailAsync(string email)
     {
         return await _context.Users
             .Include(p => p.Photos)

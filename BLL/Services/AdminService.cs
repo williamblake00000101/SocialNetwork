@@ -26,6 +26,7 @@ public class AdminService : IAdminService
             {
                 u.Id,
                 Username = u.UserName,
+                Email = u.Email,
                 Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
             })
             .ToListAsync();
