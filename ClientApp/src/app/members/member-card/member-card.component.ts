@@ -10,7 +10,7 @@ import { MembersService } from '../members.service';
   styleUrls: ['./member-card.component.scss']
 })
 export class MemberCardComponent implements OnInit {
-  @Input() memberUser: Member | undefined;
+  @Input() member: Member | undefined;
 
   constructor(private memberService: MembersService, private toastr: ToastrService,
               public presenceService: PresenceService) { }
@@ -23,4 +23,5 @@ export class MemberCardComponent implements OnInit {
       next: () => this.toastr.success('You have liked ' + member.userName)
     })
   }
+
 }
