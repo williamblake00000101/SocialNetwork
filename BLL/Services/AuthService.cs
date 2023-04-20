@@ -31,7 +31,7 @@ public class AuthService : IAuthService
         {
             Email = user.Email,
             Token = await _tokenService.CreateToken(user),
-            UserName = user.UserName,
+            Username = user.UserName,
             PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
             Gender = user.Gender
         };
@@ -55,7 +55,7 @@ public class AuthService : IAuthService
 
         return new AppUserDto
         {
-            UserName = user.UserName,
+            Username = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
@@ -80,7 +80,7 @@ public class AuthService : IAuthService
         {
             Email = user.Email,
             Token = await _tokenService.CreateToken(user),
-            UserName = user.UserName,
+            Username = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,
             PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
