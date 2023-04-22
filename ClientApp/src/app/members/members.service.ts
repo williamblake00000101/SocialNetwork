@@ -67,7 +67,7 @@ export class MembersService {
     )
   }
 
-  getMember(email: string) {
+  getMember(userName: string) {
 
     /*
     const member = [...this.memberCache.values()]
@@ -77,9 +77,9 @@ export class MembersService {
 
     if (member) return of(member);
 */
-    const member = this.members.find(x => x.email === email)
+    const member = this.members.find(x => x.userName === userName)
     if (member !== undefined) return of(member);
-    return this.http.get<Member>(this.baseUrl + 'users/' + email);
+    return this.http.get<Member>(this.baseUrl + 'users/' + userName);
   }
 
   updateMember(member: Member) {

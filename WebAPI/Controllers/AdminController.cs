@@ -22,7 +22,6 @@ public class AdminController : BaseApiController
     public async Task<ActionResult> GetUsersWithRoles()
     {
         var users = await _adminService.GetUsersWithRoles();
-
         return Ok(users);
     }
 
@@ -31,7 +30,6 @@ public class AdminController : BaseApiController
     public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
     {
         var result = await _adminService.EditRoles(username, roles);
-
         return Ok(result);
     }
 
@@ -40,7 +38,6 @@ public class AdminController : BaseApiController
     public async Task<ActionResult> GetPhotosForModeration()
     {
         var photos = await _photoService.GetUnapprovedPhotos();
-
         return Ok(photos);
     }
 
@@ -49,7 +46,6 @@ public class AdminController : BaseApiController
     public async Task<ActionResult> ApprovePhoto(int photoId)
     {
         await _photoService.ApprovePhoto(photoId);
-
         return Ok();
     }
 

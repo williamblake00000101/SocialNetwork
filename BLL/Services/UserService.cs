@@ -161,9 +161,11 @@ public class UserService : IUserService
         await _unitOfWork.SaveAsync();
     }
 
-    public async Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string email)
+    public async Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string userName)
     {
-        var user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
+        var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
+
+        if (user == null) throw new SocialNetworkException("Not Found!");
         
         var photo = new Photo
         {
@@ -200,9 +202,9 @@ public class UserService : IUserService
             totalUsers, userParams.PageNumber, userParams.PageSize);
     }
 
-    public async Task<MemberDto> GetMemberAsync(string email, bool isCurrentUser)
+    public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
     {
-        var query = _unitOfWork.UserRepository.GetUserByEmailAsync(email);
+        var query = _unitOfWork.UserRepository.GetMemberAsync(username);
         var result = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsQueryable();
         
         if (isCurrentUser) result = result.IgnoreQueryFilters();

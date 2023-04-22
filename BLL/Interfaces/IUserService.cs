@@ -14,9 +14,9 @@ public interface IUserService
     Task SendInvitationForFriendshipAsync(int userId, int wantedFriendId);
     Task ConfirmFriendship(int userId, int friendToConfirmId);
     Task DeleteFriendByFriendId(int userId, int friendToDeleteId);
-    Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string email);
+    Task<PhotoDto> AddPhotoByUser(ImageUploadResult result, string userName);
     Task<Pagination<MemberDto>> GetMembersAsync(UserParams userParams, string userName);
-    Task<MemberDto> GetMemberAsync(string email, bool isCurrentUser);
+    Task<MemberDto> GetMemberAsync(string userName, bool isCurrentUser);
     Task<MemberDto> GetMemberByIdAsync(int id);
     Task UpdateUser(MemberUpdateDto memberUpdateDto, string userName);
     Task SetMainPhotoByUser(int photoId, string userName);

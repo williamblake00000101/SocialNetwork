@@ -36,15 +36,15 @@ public class UsersController : BaseApiController
         return Ok(result);
     }
 
-    [HttpGet("{email}")]
-    public async Task<ActionResult<MemberDto>> GetUser(string email)
+    [HttpGet("{username}")]
+    public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
-        var currentEmail = User.GetUserEmail();
+        var currentUsername = User.GetUserName();
 
-        if (currentEmail == null) return NotFound();
+        if (currentUsername == null) return NotFound();
 
-        return await _userService.GetMemberAsync(email,
-            isCurrentUser: currentEmail == email);
+        return await _userService.GetMemberAsync(currentUsername,
+            isCurrentUser: currentUsername == username);
     }
 
     [HttpPut]
@@ -62,18 +62,20 @@ public class UsersController : BaseApiController
     [HttpPost("add-photo")]
     public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
     {
-        var currentEmail = User.GetUserEmail();
+        var currentUsername = User.GetUserName();
 
-        if (currentEmail == null) return NotFound();
+        if (currentUsername == null) return NotFound();
 
         var result = await _photoService.AddPhotoAsync(file);
 
         if (result.Error != null) return BadRequest(result.Error.Message);
 
-        var photoDto = _userService.AddPhotoByUser(result, currentEmail);
+        var photoDto = _userService.AddPhotoByUser(result, currentUsername);
+
+        var user = _userService.GetMemberAsync(User.GetUserName(), true);
 
         return CreatedAtAction(nameof(GetUser),
-            new { email = currentEmail }, photoDto);
+            new { username = user.Result.UserName }, photoDto);
     }
 
     [HttpPut("set-main-photo/{photoId}")]
