@@ -1,4 +1,5 @@
-﻿using DAL.Context;
+﻿using System.Collections;
+using DAL.Context;
 using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Specifications;
@@ -45,7 +46,7 @@ public class UserRepository : IUserRepository
             .Where(x => x.Email == email)
             .Include(p => p.Photos)
             .AsQueryable();
-        
+
         return query;
     }
 
@@ -64,7 +65,7 @@ public class UserRepository : IUserRepository
             .Where(p => p.Photos.Any(p => p.Id == photoId))
             .FirstOrDefaultAsync();
     }
-    
+
     public async Task<IQueryable<AppUser>> GetUserFriendsByIdAsync(int id)
     {
         var user = await _context.Users.FindAsync(id);
@@ -108,7 +109,28 @@ public class UserRepository : IUserRepository
         var query = _context.Users
             .Where(x => x.UserName == userName)
             .AsQueryable();
+
+        return query;
+    }
+
+    public IQueryable<AppUser> GetMembersAsync(UserParams userParams)
+    {
+        var query = _context.Users.AsQueryable();
         
+        query = query.Where(u => u.UserName != userParams.CurrentUsername);
+        query = query.Where(u => u.Gender == userParams.Gender);
+
+        var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
+        var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
+
+        query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+        
+        query = userParams.OrderBy switch
+        {
+            "created" => query.OrderByDescending(u => u.Created),
+            _ => query.OrderByDescending(u => u.LastActive)
+        };
+
         return query;
     }
 }

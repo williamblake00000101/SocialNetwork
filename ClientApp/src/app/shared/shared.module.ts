@@ -19,13 +19,24 @@ import { TimeagoModule } from 'ngx-timeago';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { RatingComponent } from './components/rating/rating.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatCardModule} from "@angular/material/card";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 @NgModule({
   declarations: [
     TextInputComponent,
     DatePickerComponent,
     PagerComponent,
     PagingHeaderComponent,
+    RatingComponent,
 
   ],
   imports: [
@@ -46,6 +57,16 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     TimeagoModule.forRoot(),
     ModalModule.forRoot(),
     ButtonsModule.forRoot(),
+    RatingModule.forRoot(),
+
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatProgressBarModule
   ],
   exports: [
     ButtonsModule,
@@ -70,7 +91,17 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     BsDatepickerModule,
     PaginationModule,
     TimeagoModule,
-    ModalModule
+    ModalModule,
+    RatingModule,
+    RatingComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatProgressBarModule
   ]
 })
 export class SharedModule { }

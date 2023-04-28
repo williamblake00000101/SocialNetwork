@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Message} from '../shared/models/message';
+import { Pagination } from '../shared/models/pagination';
 import {MessageService} from './messages.service';
 
 @Component({
@@ -10,10 +11,13 @@ import {MessageService} from './messages.service';
 export class MessagesComponent {
 
   messages?: Message[];
+  pagination?: Pagination;
   container = 'Unread';
   pageNumber = 1;
-  pageSize = 10;
+  pageSize = 8;
+  totalCount = 0;
   loading = false;
+
 
   constructor(private messageService: MessageService) {
   }
@@ -27,6 +31,7 @@ export class MessagesComponent {
     this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe({
       next: response => {
         this.messages = response.result;
+        this.pagination = response.pagination;
         this.loading = false;
       }
     })

@@ -16,4 +16,5 @@ public interface IUserRepository
     Task<IQueryable<AppUser>> GetUserFriendsByIdAsync(int id);
     Task<IQueryable<AppUser>> GetInvitationForFriendshipByIdAsync(int id);
     IQueryable<AppUser> GetMemberAsync(string userName);
+    IQueryable<AppUser> GetMembersAsync(UserParams userParams);
 }

@@ -1,8 +1,8 @@
 export interface Pagination {
-  pageIndex: number;
-  pageSize: number;
-  count: number;
-  data: object | undefined;
+  currentPage: number;
+  itemsPerPage: number;
+  totalItems: number;
+  totalPages: number;
 }
 
 export class PaginatedResult<T> {

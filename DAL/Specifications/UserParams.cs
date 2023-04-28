@@ -8,7 +8,6 @@ public class UserParams : PaginationParams
     public int MaxAge { get; set; } = 100;
     public string OrderBy { get; set; } = "lastActive";
     public int? SpecializationId { get; set; }
-    public string Sort { get; set; }
     private string _search;
 
     public string Search

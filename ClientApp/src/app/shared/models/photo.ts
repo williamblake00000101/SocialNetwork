@@ -4,4 +4,7 @@ export interface Photo {
   isMain: boolean;
   isApproved: boolean;
   username?: string;
+
+  averageVote: number;
+  userVote: number;
 }

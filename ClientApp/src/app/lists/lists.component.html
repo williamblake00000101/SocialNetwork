@@ -8,11 +8,11 @@
       <button class="btn btn-primary me-2"
               btnRadio="liked"
               [(ngModel)]="predicate"
-              (click)="loadLikes()">Members I like</button>
+              (click)="loadLikes()"><i class="bi bi-hand-thumbs-up"></i> Members I like</button>
       <button class="btn btn-primary me-3"
               btnRadio="likedBy"
               [(ngModel)]="predicate"
-              (click)="loadLikes()">Members who like me</button>
+              (click)="loadLikes()"><i class="bi bi-hand-index-thumb"></i> Members who like me</button>
     </div>
   </div>
 
@@ -21,4 +21,19 @@
       <app-member-card [member]="member"></app-member-card>
     </div>
   </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.itemsPerPage"
+    [maxSize]="10"
+    [(ngModel)]="pagination.currentPage"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;">
+  </pagination>
 </div>

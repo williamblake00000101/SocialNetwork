@@ -5,6 +5,7 @@ using BLL.Interfaces;
 using DAL.Entities;
 using DAL.Specifications;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Errors;
 using WebAPI.Extensions;
 using WebAPI.Helpers;
 
@@ -32,16 +33,21 @@ public class UsersController : BaseApiController
         if (currentUsername == null) return NotFound();
 
         var result = await _userService.GetMembersAsync(userParams, currentUsername);
+        
+        Response.AddPaginationHeader(new PaginationHeader(result.CurrentPage, result.PageSize, 
+            result.TotalCount, result.TotalPages));
 
         return Ok(result);
     }
 
     [HttpGet("{username}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
         var currentUsername = User.GetUserName();
 
-        if (currentUsername == null) return NotFound();
+        if (currentUsername == null) return NotFound(new ApiResponse(404));
 
         return await _userService.GetMemberAsync(currentUsername,
             isCurrentUser: currentUsername == username);

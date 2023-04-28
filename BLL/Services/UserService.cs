@@ -189,17 +189,32 @@ public class UserService : IUserService
         {
             userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
         }
-        
-        var spec = new AppUserWithSpecializationSpecification(userParams);
-        var countSpec = new AppUserWithFiltersForCountSpecification(userParams);
 
+        var query = _unitOfWork.UserRepository.GetMembersAsync(userParams);
+        
+        return await Pagination<MemberDto>.CreateAsync(
+            query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider), 
+            userParams.PageNumber, 
+            userParams.PageSize);
+
+
+        /*
+        var spec = new AppUserWithSpecializationSpecification(userParams);
+        
+        var countSpec = new AppUserWithFiltersForCountSpecification(userParams);
         var totalUsers = await _unitOfWork.Repository<AppUser>().CountAsync(countSpec);
+        
         var users = await _unitOfWork.Repository<AppUser>().ListAsync(spec);
 
+        
+        var res = users.AsQueryable();
+        var result = _unitOfWork.UserRepository.GetMembersAsync(res, userParams);
+        
         var data = _mapper.Map<IReadOnlyList<MemberDto>>(users);
 
-        return new Pagination<MemberDto>(data,
-            totalUsers, userParams.PageNumber, userParams.PageSize);
+        return new Pagination<MemberDto>(userParams.PageNumber,
+            userParams.PageSize, totalUsers, data);
+            */
     }
 
     public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)

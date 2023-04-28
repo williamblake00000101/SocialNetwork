@@ -2,12 +2,16 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { PresenceService } from 'src/app/core/services/presence.service';
 import { MessageService } from 'src/app/messages/messages.service';
+import { RatingService } from 'src/app/shared/components/rating/rating.service';
 import { Member } from 'src/app/shared/models/member';
 import { Message } from 'src/app/shared/models/message';
+import { Photo } from 'src/app/shared/models/photo';
+import { Rating } from 'src/app/shared/models/rating';
 import { User } from 'src/app/shared/models/user';
 
 @Component({
@@ -24,12 +28,24 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   user?: User;
 
+  photo?: Photo;
+  myPhotoId : number | any;
+
   constructor(private accountService: AccountService, private route: ActivatedRoute,
               private messageService: MessageService, public presenceService: PresenceService,
-              private router: Router) {
+              private router: Router, private ratingService: RatingService, private toastr: ToastrService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
+
+
+        this.member.photos.forEach(p => {
+          if (p.isMain) {
+            this.photo = p;
+            this.myPhotoId = p.id
+          }
+
+        })
       }
     });
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -98,6 +114,17 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     } else {
       this.messageService.stopHubConnection();
     }
+  }
+
+  onRating(rate: number){
+    const rating: Rating = {
+      rate: rate,
+      photoId: this.myPhotoId
+    }
+    this.ratingService.rate(rating).subscribe({
+      next: () => {this.toastr.success("Success", "Your vote has been received");},
+      error: (err) => console.log(err)
+    });
   }
 
 }

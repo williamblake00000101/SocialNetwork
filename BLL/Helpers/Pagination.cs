@@ -14,10 +14,12 @@ public class Pagination<T> : List<T>
     }
 
     public int CurrentPage { get; set; }
-    public int TotalPages { get; set; }
     public int PageSize { get; set; }
     public int TotalCount { get; set; }
-
+    public int TotalPages { get; set; }
+    public IReadOnlyList<T> Data { get; set; }
+    
+    
     public static async Task<Pagination<T>> CreateAsync(IQueryable<T> source, 
         int pageNumber, int pageSize)
     {
@@ -25,4 +27,5 @@ public class Pagination<T> : List<T>
         var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         return new Pagination<T>(items, count, pageNumber, pageSize);
     }
+    
 }

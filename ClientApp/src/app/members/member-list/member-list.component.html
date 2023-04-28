@@ -1,1 +1,111 @@
-<p>member-list works!</p>
+<div class="container">
+  <div class="row" *ngIf="specializations.length > 0">
+    <section class="col-3">
+
+      <h5 class="text ms-3" style="color: #32fbe2">Specializations</h5>
+      <ul class="list-group my-3">
+        <li class="list-group-item"
+            *ngFor="let specialization of specializations"
+            [class.active]="specialization.id === userParams?.specializationId"
+            [value]="specialization.id"
+            (click)="onSpecializationSelected(specialization.id)">{{specialization.name}}</li>
+      </ul>
+
+    </section>
+
+    <section class="col-9">
+      <div class="d-flex justify-content-between align-items-center pb-lg-5">
+        <div class="container mt-3" *ngIf="userParams">
+          <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMembers()" autocomplete="off">
+            <div class="d-flex mx-2">
+              <label class="col-form-label">Age from: </label>
+              <input
+                type="number"
+                class="form-control ms-1"
+                style="width: 70px"
+                name="minAge"
+                [(ngModel)]="userParams.minAge">
+            </div>
+            <div class="d-flex mx-2">
+              <label class="col-form-label">Age to: </label>
+              <input
+                type="number"
+                class="form-control ms-1"
+                style="width: 70px"
+                name="maxAge"
+                [(ngModel)]="userParams.maxAge">
+            </div>
+
+            <div class="d-flex px-2">
+              <label class="col-form-label me-2">Show: </label>
+              <select name="gender"
+                      style="width: 150px"
+                      class="form-select ms-1"
+                      [(ngModel)]="userParams.gender">
+                <option *ngFor="let gender of genderList" [value]="gender.value">
+                  {{gender.display}}
+                </option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary ms-1" type="submit">Apply Filters</button>
+            <button (click)="onReset()" class="btn btn-info ms-1" type="submit">Reset Filters</button>
+
+            <div class="col px-2">
+              <div class="btn-group float-end">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  name="orderBy"
+                  [(ngModel)]="userParams.orderBy"
+                  btnRadio="lastActive"
+                  (click)="loadMembers()">Last Active</button>
+                <button
+                  type="button"
+                  class="btn btn-primary ms-1"
+                  name="orderBy"
+                  [(ngModel)]="userParams.orderBy"
+                  btnRadio="created"
+                  (click)="loadMembers()">Newest members</button>
+              </div>
+            </div>
+
+
+
+          </form>
+
+
+
+          <div class="d-flex mt-2">
+            <input (keyup.enter)="onSearch()" type="text" placeholder="Search" class="form-control me-2" #search>
+            <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
+            <button (click)="onReset()" class="btn btn-outline-success">Reset</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2" *ngFor="let member of members">
+          <app-member-card [member]="member"></app-member-card>
+        </div>
+      </div>
+
+
+
+      <div class="d-flex justify-content-center" *ngIf="pagination">
+        <app-pager
+          [totalCount]="pagination.totalItems"
+          [pageSize]="pagination.itemsPerPage"
+          [pageNumber]="pagination.currentPage"
+          (pageChanged)="onPageChanged($event)"
+        ></app-pager>
+      </div>
+    </section>
+
+
+  </div>
+</div>
+
+
+
